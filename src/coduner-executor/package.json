@@ -4,8 +4,7 @@
   "description": "",
   "main": "",
   "scripts": {
-    "clean": "rm -rf build/ package-lock.json",
-    "watch": "npm run clean && ./scripts/watch.sh && exit 0"
+    "watch": "./scripts/watch.sh && exit 0"
   },
   "keywords": [],
   "author": "wrathamon",
