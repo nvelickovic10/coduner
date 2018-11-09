@@ -1,9 +1,9 @@
-package com.nvelickovic10.coduner.mongo;
+package com.nvelickovic10.coduner.mongo.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.nvelickovic10.coduner.rest.ExecutionBody;
+import com.nvelickovic10.coduner.rest.model.ExecutionBody;
 
 @Document(collection = "execution")
 public class ExecutionEntity {
@@ -12,11 +12,16 @@ public class ExecutionEntity {
 	private String id;
 	private String codeString;
 	private Object result;
+	private long executionTime = -1;
 	private boolean active;
+
+	public ExecutionEntity() {
+	}
 
 	public ExecutionEntity(ExecutionBody execution) {
 		this.codeString = execution.getCodeString();
-		this.result = null;
+		this.result = execution.getResult();
+		this.executionTime = execution.getExecutionTime();
 		this.active = true;
 	}
 
@@ -44,6 +49,14 @@ public class ExecutionEntity {
 		this.result = res;
 	}
 
+	public long getExecutionTime() {
+		return executionTime;
+	}
+
+	public void setExecutionTime(long executionTime) {
+		this.executionTime = executionTime;
+	}
+
 	public boolean isActive() {
 		return active;
 	}
@@ -54,8 +67,8 @@ public class ExecutionEntity {
 
 	@Override
 	public String toString() {
-		return String.format("ExecutionEntity{id: '%s', codeString: '%s', result: %s, active: %s}", id, codeString,
-				result, active);
+		return String.format("ExecutionEntity{id: '%s', codeString: '%s', result: %s, executionTime: %s, active: %s}",
+				id, codeString, result, executionTime, active);
 	}
 
 }

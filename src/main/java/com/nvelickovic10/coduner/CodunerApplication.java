@@ -1,4 +1,4 @@
-package com.nvelickovic10.coduner.spring;
+package com.nvelickovic10.coduner;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

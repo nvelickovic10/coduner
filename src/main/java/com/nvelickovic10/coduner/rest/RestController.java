@@ -1,8 +1,14 @@
 package com.nvelickovic10.coduner.rest;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import com.nvelickovic10.coduner.rest.model.ExecutionBody;
+import com.nvelickovic10.coduner.service.ExecutionService;
 
 @org.springframework.web.bind.annotation.RestController
 public class RestController {
@@ -10,17 +16,13 @@ public class RestController {
 	@Autowired
 	private ExecutionService executionService;
 
-//	@GetMapping("/")
-//	public ExecutionEntity index() {
-//		Optional<ExecutionEntity> optEntity = executionService.getById("5be4ceb6fda1131e6043d050");
-//		if (optEntity.isPresent()) {
-//			return optEntity.get();
-//		}
-//		return null;
-//	}
+	@GetMapping("/")
+	public List<ExecutionBody> index() {
+		return executionService.getAllExecutions();
+	}
 
 	@PostMapping(path = "/", consumes = "application/json", produces = "application/json")
-	public String execute(@RequestBody ExecutionBody execution) {
+	public ExecutionBody execute(@RequestBody ExecutionBody execution) {
 		return executionService.execute(execution);
 	}
 
