@@ -1,0 +1,28 @@
+{
+  "name": "coduner-executor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "",
+  "scripts": {
+    "clean": "rm -rf build/ package-lock.json",
+    "watch": "npm run clean && ./scripts/watch.sh && exit 0"
+  },
+  "keywords": [],
+  "author": "wrathamon",
+  "license": "ISC",
+  "dependencies": {
+    "express": "4.16.4",
+    "vm2": "3.6.4"
+  },
+  "devDependencies": {
+    "@babel/cli": "7.1.2",
+    "@babel/core": "7.1.2",
+    "@babel/node": "7.0.0",
+    "@babel/preset-env": "7.1.0",
+    "babelify": "10.0.0",
+    "browserify": "16.2.3",
+    "nodemon": "1.18.5",
+    "watch": "1.0.2",
+    "watchify": "3.11.0"
+  }
+}
