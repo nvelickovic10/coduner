@@ -1,12 +1,12 @@
-package com.nvelickovic10.liaservices;
+package com.nvelickovic10.coduner.spring;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class LiaServicesApplication {
+public class CodunerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(LiaServicesApplication.class, args);
+		SpringApplication.run(CodunerApplication.class, args);
 	}
 }

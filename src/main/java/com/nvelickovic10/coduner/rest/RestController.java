@@ -1,11 +1,8 @@
-package com.nvelickovic10.liaservices;
+package com.nvelickovic10.coduner.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
-import com.nvelickovic10.liaservices.rest.ExecutionBody;
-import com.nvelickovic10.liaservices.rest.ExecutionService;
 
 @org.springframework.web.bind.annotation.RestController
 public class RestController {

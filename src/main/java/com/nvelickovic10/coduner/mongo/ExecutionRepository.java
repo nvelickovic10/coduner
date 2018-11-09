@@ -1,4 +1,4 @@
-package com.nvelickovic10.liaservices.mongo;
+package com.nvelickovic10.coduner.mongo;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 

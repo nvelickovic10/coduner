@@ -1,4 +1,4 @@
-package com.nvelickovic10.liaservices;
+package com.nvelickovic10.coduner;
 
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;

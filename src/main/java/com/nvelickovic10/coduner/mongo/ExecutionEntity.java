@@ -1,9 +1,9 @@
-package com.nvelickovic10.liaservices.mongo;
+package com.nvelickovic10.coduner.mongo;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.nvelickovic10.liaservices.rest.ExecutionBody;
+import com.nvelickovic10.coduner.rest.ExecutionBody;
 
 @Document(collection = "execution")
 public class ExecutionEntity {

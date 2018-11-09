@@ -1,4 +1,4 @@
-package com.nvelickovic10.liaservices.rest;
+package com.nvelickovic10.coduner.rest;
 
 import java.util.Optional;
 
@@ -9,8 +9,8 @@ import javax.script.ScriptException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.nvelickovic10.liaservices.mongo.ExecutionRepository;
-import com.nvelickovic10.liaservices.mongo.ExecutionEntity;
+import com.nvelickovic10.coduner.mongo.ExecutionEntity;
+import com.nvelickovic10.coduner.mongo.ExecutionRepository;
 
 @Service
 public class ExecutionService {

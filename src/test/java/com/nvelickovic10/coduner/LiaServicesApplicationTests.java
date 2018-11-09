@@ -1,4 +1,4 @@
-package com.nvelickovic10.liaservices;
+package com.nvelickovic10.coduner;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

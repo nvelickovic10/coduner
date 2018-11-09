@@ -5,18 +5,18 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.nvelickovic10</groupId>
-	<artifactId>lia-services</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>coduner</artifactId>
+	<version>0.0.1</version>
 	<packaging>jar</packaging>
 
-	<name>lia-services</name>
-	<description>Demo project for Spring Boot</description>
+	<name>coduner</name>
+	<description>Code runner application</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.1.0.RELEASE</version>
-		<relativePath /> <!-- lookup parent from repository -->
+		<relativePath />
 	</parent>
 
 	<properties>
@@ -30,6 +30,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-mongodb</artifactId>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -40,11 +41,13 @@
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
@@ -59,6 +62,5 @@
 			</plugin>
 		</plugins>
 	</build>
-
 
 </project>
