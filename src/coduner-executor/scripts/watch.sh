@@ -2,9 +2,6 @@
 cd "$(dirname "$0")"
 . common.sh
 
-logDebug "Creating resources"
-mkdir -p ./build/
-
 logDebug "Running watch commands"
 node_modules/.bin/watch ./scripts/buildServer.sh ./server/ --wait=1 --interval=1 &
 

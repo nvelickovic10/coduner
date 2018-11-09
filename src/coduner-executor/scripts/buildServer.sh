@@ -3,5 +3,5 @@ cd "$(dirname "$0")"
 . common.sh
 
 logDebug "Building server"
-mkdir -p ./build/server/
-babel ./server/ --out-dir ./build/server/ --presets=@babel/preset-env
+mkdir -p ./build/
+babel ./server/ --out-dir ./build/ --presets=@babel/preset-env

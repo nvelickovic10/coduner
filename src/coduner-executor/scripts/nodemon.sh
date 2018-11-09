@@ -4,4 +4,4 @@ cd "$(dirname "$0")"
 cd ./build/
 
 logDebug "Running nodemon"
-../node_modules/.bin/nodemon  --delay 0.2 --ignore ./public/ -w ./ ./server/index.js
+../node_modules/.bin/nodemon  --delay 0.2 -w ./ ./index.js

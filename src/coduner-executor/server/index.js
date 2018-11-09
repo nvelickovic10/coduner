@@ -1,11 +1,20 @@
 import express from 'express';
-const { VM } = require('vm2');
+import bodyParser from 'body-parser';
+import { VM } from 'vm2';
 
 const app = express();
 const vm = new VM();
 
+app.use(bodyParser.json());
+
 app.post('/', (req, res) => {
-    res.send(200, vm.run('function a() {return 4;}; setTimeout(2000, a);'));
+    console.log(req.body);
+    const response = {
+        result: vm.run(req.body.codeString)
+    };
+    res.status(200).send(response);
 });
 
-app.listen(3000);
+app.listen(3000, () => {
+    console.log("Listening on localhost:3000");
+});
