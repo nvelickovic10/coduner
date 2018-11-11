@@ -15,9 +15,8 @@ public class NodeResponseDeserializer implements JsonDeserializer<NodeResponse> 
 			throws JsonParseException {
 		NodeResponse responseJSON = new Gson().fromJson(json.getAsJsonObject(), NodeResponse.class);
 
-		//TODO: must be better than this
+		// TODO: must be better than this
 		responseJSON.result = json.getAsJsonObject().get("result").toString();
-
 		return responseJSON;
 	}
 

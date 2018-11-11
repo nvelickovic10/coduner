@@ -20,7 +20,6 @@ public class ExecutionEntity {
 	private long totalNodeTime = -1;
 	private long totalRequestTime = -1;
 	private long totalDeserializeTime = -1;
-	private long totalBootTime = -1;
 	private String result;
 
 	public ExecutionEntity() {
@@ -102,14 +101,6 @@ public class ExecutionEntity {
 		this.totalDeserializeTime = totalDeserializeTime;
 	}
 
-	public long getTotalBootTime() {
-		return totalBootTime;
-	}
-
-	public void setTotalBootTime(long totalBootTime) {
-		this.totalBootTime = totalBootTime < 0 ? -1 : totalBootTime;
-	}
-
 	public String getResult() {
 		return result;
 	}
@@ -123,8 +114,8 @@ public class ExecutionEntity {
 		return String.format(
 				"ExecutionEntity{\n" + "id: '%s',\n" + "codeString: '%s',\n" + "error: %s,\n" + "*message: %s,\n"
 						+ "compileTime: %s,\n" + "executionTime: %s,\n" + "totalNodeTime: %s,\n"
-						+ "totalRequestTime: %s,\n" + "totalBootTime: %s,\n" + "result: %s" + "\n" + "}",
+						+ "totalRequestTime: %s,\n" + "result: %s" + "\n" + "}",
 				id, codeString, error, message, totalCompileTime, totalRunTime, totalNodeTime, totalRequestTime,
-				totalBootTime, result);
+				result);
 	}
 }

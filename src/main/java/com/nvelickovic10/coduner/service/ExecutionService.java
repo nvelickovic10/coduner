@@ -22,16 +22,22 @@ public class ExecutionService {
 	private ExecutionRepository repository;
 
 	public Execution.Response execute(com.nvelickovic10.coduner.rest.model.Execution.Request execution) {
+		long serviceStartTime = System.nanoTime();
+		long startTime = System.nanoTime();
 		ExecutionEntity executionEntity = new ExecutionEntity(execution);
 		jsExecutioner.execute(executionEntity);
-		executionEntity = repository.save(executionEntity);
-		System.out.println(executionEntity);
-		return new Execution.Response(executionEntity);
-	}
+		double totalExecutionTimeMs = (System.nanoTime() - startTime) / 1e6;
 
-	public List<Execution.Response> getAllExecutions() {
-		List<ExecutionEntity> executionEntities = repository.findAll();
-		return executionEntities.stream().map(entity -> new Execution.Response(entity)).collect(Collectors.toList());
+		startTime = System.nanoTime();
+		executionEntity = repository.save(executionEntity);
+		double totalMongoTimeMs = (System.nanoTime() - startTime) / 1e6;
+		System.out.println(executionEntity);
+
+		Execution.Response response = new Execution.Response(executionEntity);
+		response.setTotalMongoTimeMs(totalMongoTimeMs);
+		response.setTotalExecutionTimeMs(totalExecutionTimeMs);
+		response.setTotalServiceTimeMs((System.nanoTime() - serviceStartTime) / 1e6);
+		return response;
 	}
 
 	public List<ExecutionDetails.Response> getAllExecutionsDetails() {

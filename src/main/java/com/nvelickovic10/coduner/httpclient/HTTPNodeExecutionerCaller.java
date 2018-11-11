@@ -28,15 +28,13 @@ public class HTTPNodeExecutionerCaller {
 	}
 
 	public void execute(ExecutionEntity executionEntity) {
-		long startTime = System.nanoTime();
-
 		try {
+			long startTime = System.nanoTime();
 			HttpResponse response = callNodeExecutioner(executionEntity.getCodeString());
 			long requestTime = System.nanoTime();
 			executionEntity.setTotalRequestTime(requestTime - startTime);
 
 			NodeResponse nodeResponse = convertToNodeResponse(EntityUtils.toString(response.getEntity()));
-			executionEntity.setTotalDeserializeTime(System.nanoTime() - requestTime);
 
 			executionEntity.setTotalCompileTime(nodeResponse.compileTime - nodeResponse.startTime);
 			executionEntity.setTotalRunTime(nodeResponse.runTime - nodeResponse.compileTime);
@@ -45,12 +43,11 @@ public class HTTPNodeExecutionerCaller {
 			executionEntity.setMessage(nodeResponse.message);
 			executionEntity.setResult(nodeResponse.result);
 			executionEntity.setError(response.getStatusLine().getStatusCode() != 200);
+			executionEntity.setTotalDeserializeTime(System.nanoTime() - requestTime);
 		} catch (IOException e) {
 			e.printStackTrace();
 			executionEntity.setResult("Cannot be processed right now");
 			executionEntity.setError(true);
-		} finally {
-			executionEntity.setTotalBootTime(System.nanoTime() - startTime);
 		}
 	}
 

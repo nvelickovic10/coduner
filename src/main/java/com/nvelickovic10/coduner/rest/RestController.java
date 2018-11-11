@@ -17,11 +17,6 @@ public class RestController {
 	@Autowired
 	private ExecutionService executionService;
 
-	@GetMapping(path = "/", produces = "application/json")
-	public List<Execution.Response> getAllExecutions() {
-		return executionService.getAllExecutions();
-	}
-	
 	@GetMapping(path = "/details", produces = "application/json")
 	public List<ExecutionDetails.Response> getAllExecutionDetails() {
 		return executionService.getAllExecutionsDetails();
@@ -29,7 +24,10 @@ public class RestController {
 
 	@PostMapping(path = "/", consumes = "application/json", produces = "application/json")
 	public Execution.Response execute(@RequestBody Execution.Request execution) {
-		return executionService.execute(execution);
+		Execution.Response res = new Execution.Response();
+		res.setTotalExecutionTimeMs(12.0);
+		return res;
+//		return executionService.execute(execution);
 	}
 
 }
