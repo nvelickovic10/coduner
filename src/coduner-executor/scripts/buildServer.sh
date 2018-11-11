@@ -4,4 +4,4 @@ cd "$(dirname "$0")"
 
 logDebug "Building server"
 mkdir -p ./build/
-babel ./server/ --out-dir ./build/ --presets=@babel/preset-env
+babel ./server/ --out-dir ./build/ --presets=@babel/preset-env --source-maps

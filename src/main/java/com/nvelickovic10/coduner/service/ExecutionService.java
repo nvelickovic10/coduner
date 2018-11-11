@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.nvelickovic10.coduner.logic.JSExecutioner;
+import com.nvelickovic10.coduner.httpClient.HTTPNodeExecutionerCaller;
 import com.nvelickovic10.coduner.mongo.ExecutionRepository;
 import com.nvelickovic10.coduner.mongo.model.ExecutionEntity;
 import com.nvelickovic10.coduner.rest.model.ExecutionBody;
@@ -16,7 +16,7 @@ import com.nvelickovic10.coduner.rest.model.ExecutionBody;
 public class ExecutionService {
 
 	@Autowired
-	private JSExecutioner jsExecutioner;
+	private HTTPNodeExecutionerCaller jsExecutioner;
 
 	@Autowired
 	private ExecutionRepository repository;
@@ -31,6 +31,7 @@ public class ExecutionService {
 		ExecutionEntity executionEntity = getOrCreateExecutionEntity(execution);
 		jsExecutioner.execute(executionEntity);
 		executionEntity = repository.save(executionEntity);
+//		System.out.println(executionEntity);
 		return new ExecutionBody(executionEntity);
 	}
 

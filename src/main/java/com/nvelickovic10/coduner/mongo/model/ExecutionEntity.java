@@ -11,8 +11,13 @@ public class ExecutionEntity {
 	@Id
 	private String id;
 	private String codeString;
-	private Object result;
-	private long executionTime = -1;
+	private boolean error;
+	private String result;
+	private long compileTime = -1;
+	private long runTime = -1;
+	private long totalNodeTime = -1;
+	private long totalRequestTime = -1;
+	private long totalBootTime = -1;
 	private boolean active;
 
 	public ExecutionEntity() {
@@ -20,8 +25,6 @@ public class ExecutionEntity {
 
 	public ExecutionEntity(ExecutionBody execution) {
 		this.codeString = execution.getCodeString();
-		this.result = execution.getResult();
-		this.executionTime = execution.getExecutionTime();
 		this.active = true;
 	}
 
@@ -41,20 +44,60 @@ public class ExecutionEntity {
 		this.codeString = codeString;
 	}
 
-	public Object getResult() {
+	public String getResult() {
 		return result;
 	}
 
-	public void setResult(Object res) {
+	public void setResult(String res) {
 		this.result = res;
 	}
 
-	public long getExecutionTime() {
-		return executionTime;
+	public boolean isError() {
+		return error;
 	}
 
-	public void setExecutionTime(long executionTime) {
-		this.executionTime = executionTime;
+	public void setError(boolean error) {
+		this.error = error;
+	}
+
+	public long getCompileTime() {
+		return compileTime;
+	}
+
+	public void setCompileTime(long compileTime) {
+		this.compileTime = compileTime < 0 ? -1 : compileTime;
+	}
+
+	public long getRunTime() {
+		return runTime;
+	}
+
+	public void setRunTime(long executionTime) {
+		this.runTime = executionTime < 0 ? -1 : executionTime;
+	}
+
+	public long getTotalNodeTime() {
+		return totalNodeTime;
+	}
+
+	public void setTotalNodeTime(long totalNodeTime) {
+		this.totalNodeTime = totalNodeTime < 0 ? -1 : totalNodeTime;
+	}
+
+	public long getTotalRequestTime() {
+		return totalRequestTime;
+	}
+
+	public void setTotalRequestTime(long totalRequestTime) {
+		this.totalRequestTime = totalRequestTime < 0 ? -1 : totalRequestTime;
+	}
+
+	public long getTotalBootTime() {
+		return totalBootTime;
+	}
+
+	public void setTotalBootTime(long totalBootTime) {
+		this.totalBootTime = totalBootTime < 0 ? -1 : totalBootTime;
 	}
 
 	public boolean isActive() {
@@ -67,8 +110,9 @@ public class ExecutionEntity {
 
 	@Override
 	public String toString() {
-		return String.format("ExecutionEntity{id: '%s', codeString: '%s', result: %s, executionTime: %s, active: %s}",
-				id, codeString, result, executionTime, active);
+		return String.format(
+				"ExecutionEntity{id: '%s', codeString: '%s', result: %s, error: %s, compileTime: %s, executionTime: %s, totalNodeTime: %s, totalRequestTime: %s, totalBootTime: %s, active: %s}",
+				id, codeString, result, error, compileTime, runTime, totalNodeTime, totalRequestTime, totalBootTime,
+				active);
 	}
-
 }

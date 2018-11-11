@@ -1,20 +1,20 @@
-import express from 'express';
 import bodyParser from 'body-parser';
-import { VM } from 'vm2';
+import express from 'express';
+import jsExecutorService from './services/jsExecutorService';
 
 const app = express();
-const vm = new VM();
 
 app.use(bodyParser.json());
 
 app.post('/', (req, res) => {
-    console.log(req.body);
-    const response = {
-        result: vm.run(req.body.codeString)
-    };
-    res.status(200).send(response);
+    try {
+        const result = jsExecutorService.execute(req.body.codeString);
+        res.status(200).send(result);
+    } catch (err) {
+        res.status(500).send(err);
+    }
 });
 
 app.listen(3000, () => {
-    console.log("Listening on localhost:3000");
+    console.log('Listening on localhost:3000');
 });

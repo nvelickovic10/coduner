@@ -5,9 +5,9 @@ import com.nvelickovic10.coduner.mongo.model.ExecutionEntity;
 public class ExecutionBody {
 	private String id;
 	private String codeString;
-	private boolean isExecuted;
+	private boolean error;
+	private String result;
 	private long executionTime = -1;
-	private Object result;
 
 	public ExecutionBody() {
 	}
@@ -19,9 +19,9 @@ public class ExecutionBody {
 	public ExecutionBody(ExecutionEntity executionEntity) {
 		this.id = executionEntity.getId();
 		this.codeString = executionEntity.getCodeString();
-		this.isExecuted = executionEntity.getExecutionTime() > -1;
-		this.executionTime = executionEntity.getExecutionTime();
+		this.error = executionEntity.isError();
 		this.result = executionEntity.getResult();
+		this.executionTime = executionEntity.getRunTime();
 	}
 
 	public String getId() {
@@ -40,19 +40,19 @@ public class ExecutionBody {
 		this.codeString = codeString;
 	}
 
-	public boolean isExecuted() {
-		return isExecuted;
+	public boolean isError() {
+		return error;
 	}
 
-	public void setExecuted(boolean isExecuted) {
-		this.isExecuted = isExecuted;
+	public void setError(boolean error) {
+		this.error = error;
 	}
-
-	public Object getResult() {
+	
+	public String getResult() {
 		return result;
 	}
-
-	public void setResult(Object result) {
+	
+	public void setResult(String result) {
 		this.result = result;
 	}
 
