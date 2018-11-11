@@ -1,7 +1,11 @@
 import { VM, VMScript } from 'vm2';
 
 const constants = {
-    NS_PER_SEC: 1e9
+    NS_PER_SEC: 1e9,
+    SUCCESS: 'success',
+    CODE_SUCCESS: 0,
+    CODE_COMPILE_ERROR: 1,
+    CODE_RUN_ERROR: 2
 };
 
 const _getTimeNanos = (time = undefined) => {
@@ -15,9 +19,9 @@ const _compile = codeString => {
     } catch (err) {
         // console.error('_compile:', err);
         throw {
-            message: 'Failed to compile code: ' + err.message,
-            code: JSON.stringify(1),
-            stack: err.stack
+            message: err.message,
+            stack: err.message,
+            code: constants.CODE_COMPILE_ERROR
         };
     }
 };
@@ -34,9 +38,9 @@ const _run = script => {
     } catch (err) {
         // console.error('_run:', err);
         throw {
-            message: 'Failed to run code: ' + err.message,
-            code: JSON.stringify(2),
-            stack: err.stack
+            message: err.message,
+            stack: err.message,
+            code: constants.CODE_RUN_ERROR
         };
     }
 };
@@ -51,23 +55,24 @@ const execute = codeString => {
         const result = _run(script);
         runTime = _getTimeNanos();
         return {
-            result: JSON.stringify(result),
-            startTime: '' + startTime,
-            compileTime: '' + compileTime,
-            runTime: '' + runTime,
-            endTime: '' + _getTimeNanos()
+            message: constants.SUCCESS,
+            code: constants.CODE_SUCCESS,
+            startTime: startTime,
+            compileTime: compileTime,
+            runTime: runTime,
+            endTime: _getTimeNanos(),
+            result: result
         };
     } catch (err) {
         runTime = compileTime ? runTime || _getTimeNanos() : runTime || -1;
         compileTime = compileTime || _getTimeNanos();
         throw {
             message: err.message,
-            code: err.code,
-            stack: err.stack,
-            startTime: '' + startTime,
-            compileTime: '' + compileTime,
-            runTime: '' + runTime,
-            endTime: '' + _getTimeNanos()
+            startTime: startTime,
+            compileTime: compileTime,
+            runTime: runTime,
+            endTime: _getTimeNanos(),
+            result: err.stack,
         };
     }
 };

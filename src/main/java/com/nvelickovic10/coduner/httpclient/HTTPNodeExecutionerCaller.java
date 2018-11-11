@@ -1,9 +1,7 @@
-package com.nvelickovic10.coduner.httpClient;
+package com.nvelickovic10.coduner.httpclient;
 
 import java.io.IOException;
-import java.util.Map;
 
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -14,6 +12,8 @@ import org.apache.http.util.EntityUtils;
 import org.springframework.stereotype.Component;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.LongSerializationPolicy;
 import com.nvelickovic10.coduner.mongo.model.ExecutionEntity;
 
 @Component
@@ -32,23 +32,19 @@ public class HTTPNodeExecutionerCaller {
 
 		try {
 			HttpResponse response = callNodeExecutioner(executionEntity.getCodeString());
-			Map<String, String> responseJSON = getResponseJSON(response.getEntity());
+			long requestTime = System.nanoTime();
+			executionEntity.setTotalRequestTime(requestTime - startTime);
 
-			executionEntity.setTotalRequestTime(System.nanoTime() - startTime);
-			executionEntity.setCompileTime(
-					Long.valueOf(responseJSON.get("compileTime")) - Long.valueOf(responseJSON.get("startTime")));
-			executionEntity.setRunTime(
-					Long.valueOf(responseJSON.get("runTime")) - Long.valueOf(responseJSON.get("startTime")));
-			executionEntity.setTotalNodeTime(
-					Long.valueOf(responseJSON.get("endTime")) - Long.valueOf(responseJSON.get("startTime")));
+			NodeResponse nodeResponse = convertToNodeResponse(EntityUtils.toString(response.getEntity()));
+			executionEntity.setTotalDeserializeTime(System.nanoTime() - requestTime);
 
-			if (response.getStatusLine().getStatusCode() == 200) {
-				executionEntity.setResult((String) responseJSON.get("result"));
-			} else if (response.getStatusLine().getStatusCode() == 500) {
-				executionEntity.setResult(responseJSON.get("stack"));
-				executionEntity.setError(true);
-			}
+			executionEntity.setTotalCompileTime(nodeResponse.compileTime - nodeResponse.startTime);
+			executionEntity.setTotalRunTime(nodeResponse.runTime - nodeResponse.compileTime);
+			executionEntity.setTotalNodeTime(nodeResponse.endTime - nodeResponse.startTime);
 
+			executionEntity.setMessage(nodeResponse.message);
+			executionEntity.setResult(nodeResponse.result);
+			executionEntity.setError(response.getStatusLine().getStatusCode() != 200);
 		} catch (IOException e) {
 			e.printStackTrace();
 			executionEntity.setResult("Cannot be processed right now");
@@ -58,10 +54,12 @@ public class HTTPNodeExecutionerCaller {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	private Map<String, String> getResponseJSON(HttpEntity entity) throws IOException {
-		String json = EntityUtils.toString(entity, "UTF-8");
-		return new Gson().fromJson(json, Map.class);
+	private NodeResponse convertToNodeResponse(String jsonString) throws IOException {
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setLongSerializationPolicy(LongSerializationPolicy.STRING);
+		gsonBuilder.registerTypeAdapter(NodeResponse.class, new NodeResponseDeserializer());
+		Gson gson = gsonBuilder.create();
+		return gson.fromJson(jsonString, NodeResponse.class);
 	}
 
 	private HttpResponse callNodeExecutioner(String codeString) throws IOException {
@@ -70,4 +68,5 @@ public class HTTPNodeExecutionerCaller {
 		httppost.setEntity(jsonEntity);
 		return httpclient.execute(httppost);
 	}
+
 }

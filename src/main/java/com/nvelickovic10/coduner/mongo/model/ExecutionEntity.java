@@ -1,9 +1,10 @@
 package com.nvelickovic10.coduner.mongo.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.nvelickovic10.coduner.rest.model.ExecutionBody;
+import com.nvelickovic10.coduner.rest.model.Execution;
 
 @Document(collection = "execution")
 public class ExecutionEntity {
@@ -11,21 +12,22 @@ public class ExecutionEntity {
 	@Id
 	private String id;
 	private String codeString;
+	@Transient
+	private String message;
 	private boolean error;
-	private String result;
-	private long compileTime = -1;
-	private long runTime = -1;
+	private long totalCompileTime = -1;
+	private long totalRunTime = -1;
 	private long totalNodeTime = -1;
 	private long totalRequestTime = -1;
+	private long totalDeserializeTime = -1;
 	private long totalBootTime = -1;
-	private boolean active;
+	private String result;
 
 	public ExecutionEntity() {
 	}
 
-	public ExecutionEntity(ExecutionBody execution) {
+	public ExecutionEntity(Execution.Request execution) {
 		this.codeString = execution.getCodeString();
-		this.active = true;
 	}
 
 	public String getId() {
@@ -44,14 +46,6 @@ public class ExecutionEntity {
 		this.codeString = codeString;
 	}
 
-	public String getResult() {
-		return result;
-	}
-
-	public void setResult(String res) {
-		this.result = res;
-	}
-
 	public boolean isError() {
 		return error;
 	}
@@ -60,20 +54,28 @@ public class ExecutionEntity {
 		this.error = error;
 	}
 
-	public long getCompileTime() {
-		return compileTime;
+	public String getMessage() {
+		return message;
 	}
 
-	public void setCompileTime(long compileTime) {
-		this.compileTime = compileTime < 0 ? -1 : compileTime;
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
-	public long getRunTime() {
-		return runTime;
+	public long getTotalCompileTime() {
+		return totalCompileTime;
 	}
 
-	public void setRunTime(long executionTime) {
-		this.runTime = executionTime < 0 ? -1 : executionTime;
+	public void setTotalCompileTime(long totalCompileTime) {
+		this.totalCompileTime = totalCompileTime < 0 ? -1 : totalCompileTime;
+	}
+
+	public long getTotalRunTime() {
+		return totalRunTime;
+	}
+
+	public void setTotalRunTime(long totalrunTime) {
+		this.totalRunTime = totalrunTime < 0 ? -1 : totalrunTime;
 	}
 
 	public long getTotalNodeTime() {
@@ -92,6 +94,14 @@ public class ExecutionEntity {
 		this.totalRequestTime = totalRequestTime < 0 ? -1 : totalRequestTime;
 	}
 
+	public long getTotalDeserializeTime() {
+		return totalDeserializeTime;
+	}
+
+	public void setTotalDeserializeTime(long totalDeserializeTime) {
+		this.totalDeserializeTime = totalDeserializeTime;
+	}
+
 	public long getTotalBootTime() {
 		return totalBootTime;
 	}
@@ -100,19 +110,21 @@ public class ExecutionEntity {
 		this.totalBootTime = totalBootTime < 0 ? -1 : totalBootTime;
 	}
 
-	public boolean isActive() {
-		return active;
+	public String getResult() {
+		return result;
 	}
 
-	public void setActive(boolean active) {
-		this.active = active;
+	public void setResult(String res) {
+		this.result = res;
 	}
 
 	@Override
 	public String toString() {
 		return String.format(
-				"ExecutionEntity{id: '%s', codeString: '%s', result: %s, error: %s, compileTime: %s, executionTime: %s, totalNodeTime: %s, totalRequestTime: %s, totalBootTime: %s, active: %s}",
-				id, codeString, result, error, compileTime, runTime, totalNodeTime, totalRequestTime, totalBootTime,
-				active);
+				"ExecutionEntity{\n" + "id: '%s',\n" + "codeString: '%s',\n" + "error: %s,\n" + "*message: %s,\n"
+						+ "compileTime: %s,\n" + "executionTime: %s,\n" + "totalNodeTime: %s,\n"
+						+ "totalRequestTime: %s,\n" + "totalBootTime: %s,\n" + "result: %s" + "\n" + "}",
+				id, codeString, error, message, totalCompileTime, totalRunTime, totalNodeTime, totalRequestTime,
+				totalBootTime, result);
 	}
 }
