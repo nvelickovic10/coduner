@@ -25,7 +25,13 @@
 /.nb-gradle/
 
 ### node ###
-*/node_modules/
+src/coduner-executor/node_modules
+src/coduner-executor/build
+src/coduner-executor/.vscode
+package-lock.json
 
 ### MAC ###
 *.DS_Store
+
+### Perf tests ###
+nodeLoadTestResults.csv
