@@ -24,10 +24,7 @@ public class RestController {
 
 	@PostMapping(path = "/", consumes = "application/json", produces = "application/json")
 	public Execution.Response execute(@RequestBody Execution.Request execution) {
-		Execution.Response res = new Execution.Response();
-		res.setTotalExecutionTimeMs(12.0);
-		return res;
-//		return executionService.execute(execution);
+		return executionService.execute(execution);
 	}
 
 }

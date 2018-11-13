@@ -7,9 +7,9 @@ public class NodeResponse implements Serializable {
 
 	String message;
 	int code;
-	long startTime;
-	long compileTime;
-	long runTime;
-	long endTime;
+	public long startTime;
+	public long compileTime;
+	public long runTime;
+	public long endTime;
 	transient String result;
 }

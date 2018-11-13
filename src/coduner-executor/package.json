@@ -19,6 +19,7 @@
     "@babel/core": "7.1.2",
     "@babel/preset-env": "7.1.0",
     "nodemon": "1.18.5",
+    "pm2": "^3.2.2",
     "watch": "1.0.2"
   }
 }
