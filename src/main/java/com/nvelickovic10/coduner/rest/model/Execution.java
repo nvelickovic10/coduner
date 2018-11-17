@@ -27,9 +27,8 @@ public class Execution {
 		private String codeString;
 		private boolean error;
 		private String message;
-		private double runTimeMs = -1;
+		private double totalRunTimeMs = -1;
 		private double totalExecutionTimeMs = -1;
-		private double totalMongoTimeMs = -1;
 		private double totalServiceTimeMs = -1;
 		private String result;
 
@@ -41,7 +40,7 @@ public class Execution {
 			this.codeString = executionEntity.getCodeString();
 			this.error = executionEntity.isError();
 			this.message = executionEntity.getMessage();
-			this.runTimeMs = executionEntity.getTotalRunTime() / 1e6;
+			this.totalRunTimeMs = executionEntity.getTotalRunTime() / 1e6;
 			this.result = executionEntity.getResult();
 		}
 
@@ -77,12 +76,12 @@ public class Execution {
 			this.message = message;
 		}
 
-		public double getRunTimeMs() {
-			return runTimeMs;
+		public double getTotalRunTimeMs() {
+			return totalRunTimeMs;
 		}
 
-		public void setRunTimeMs(double runTimeMs) {
-			this.runTimeMs = runTimeMs;
+		public void setTotalRunTimeMs(double totalRunTimeMs) {
+			this.totalRunTimeMs = totalRunTimeMs;
 		}
 
 		public double getTotalExecutionTimeMs() {
@@ -91,14 +90,6 @@ public class Execution {
 
 		public void setTotalExecutionTimeMs(double totalExecutionTimeMs) {
 			this.totalExecutionTimeMs = totalExecutionTimeMs;
-		}
-
-		public double getTotalMongoTimeMs() {
-			return totalMongoTimeMs;
-		}
-
-		public void setTotalMongoTimeMs(double totalMongoTime) {
-			this.totalMongoTimeMs = totalMongoTime;
 		}
 
 		public double getTotalServiceTimeMs() {

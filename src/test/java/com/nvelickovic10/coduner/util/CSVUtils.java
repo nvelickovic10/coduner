@@ -6,23 +6,16 @@ import java.io.PrintWriter;
 public final class CSVUtils {
 
 	public static final char SEPARATOR = ',';
-	private static CSVUtils instance;
 	private PrintWriter out;
 
-	private CSVUtils() {
+	public CSVUtils(String fileName) {
 		try {
-			out = new PrintWriter("src/test/resources/nodeLoadTestResults.csv");
+			//nodeLoadTestResults.csv
+			out = new PrintWriter("src/test/resources/" + fileName);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			System.exit(1);
 		}
-	}
-
-	public static final CSVUtils getInstance() {
-		if (instance == null) {
-			instance = new CSVUtils();
-		}
-		return instance;
 	}
 
 	public void writeLine(String line) {
@@ -32,10 +25,5 @@ public final class CSVUtils {
 
 	public void saveFile() {
 		out.close();
-	}
-	
-	public static void main(String[] args) {
-		CSVUtils.getInstance().writeLine("waaa");
-		CSVUtils.getInstance().saveFile();
 	}
 }

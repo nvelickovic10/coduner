@@ -9,6 +9,8 @@ import com.nvelickovic10.coduner.httpclient.NodeResponse;
 import com.nvelickovic10.coduner.util.CSVUtils;
 
 public class TestNodeApp {
+	
+	private static CSVUtils CSV_UTILS = new CSVUtils("nodeLoadTestResults.csv");
 
 	public static class NodeCallerLoadTest implements Runnable {
 		private HTTPNodeExecutionerCaller httpNodeExecutionerCaller = new HTTPNodeExecutionerCaller();
@@ -72,8 +74,7 @@ public class TestNodeApp {
 //			maxResponseTimeMs = responseTime > maxResponseTimeMs ? responseTime : maxResponseTimeMs;
 //			minResponseTimeMs = responseTime < minResponseTimeMs ? responseTime : minResponseTimeMs;
 
-			CSVUtils.getInstance()
-					.writeLine(String.format("%s,%s,%s,%s,%s,%s,%s,%s", compileTime, runTime, serviceTime,
+			CSV_UTILS.writeLine(String.format("%s,%s,%s,%s,%s,%s,%s,%s", compileTime, runTime, serviceTime,
 							responseTime/* , maxCompileTimeMs, maxRunTimeMs, maxServiceTimeMs, maxResponseTimeMs */,
 							load, totalFails.get(), totalRequests.incrementAndGet(), reqId));
 		}
@@ -86,8 +87,7 @@ public class TestNodeApp {
 		int requestsPerClient = 400;
 		long reqId = 0, requests = 0;
 
-		CSVUtils.getInstance()
-				.writeLine("compileTime,runTime,serviceTime,responseTime,load,totalFails,totalRequests,requestId");
+		CSV_UTILS.writeLine("compileTime,runTime,serviceTime,responseTime,load,totalFails,totalRequests,requestId");
 
 		long startTime = System.nanoTime();
 
@@ -103,7 +103,7 @@ public class TestNodeApp {
 				executor.shutdown();
 				executor.awaitTermination(1, TimeUnit.MINUTES);
 			}
-			CSVUtils.getInstance().saveFile();
+			CSV_UTILS.saveFile();
 			System.out.println("Total tequests: " + reqId + ", totalRunTime: " + (System.nanoTime() - startTime) / 1e9);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block

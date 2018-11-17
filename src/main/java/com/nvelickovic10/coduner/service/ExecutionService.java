@@ -20,23 +20,21 @@ public class ExecutionService {
 
 	@Autowired
 	private ExecutionRepository repository;
+	
+	@Autowired
+	private ReportService reportService;
 
 	public Execution.Response execute(com.nvelickovic10.coduner.rest.model.Execution.Request execution) {
-		long serviceStartTime = System.nanoTime();
 		long startTime = System.nanoTime();
 		ExecutionEntity executionEntity = new ExecutionEntity(execution);
 		jsExecutioner.execute(executionEntity);
 		double totalExecutionTimeMs = (System.nanoTime() - startTime) / 1e6;
 
-		startTime = System.nanoTime();
-		executionEntity = repository.save(executionEntity);
-		double totalMongoTimeMs = (System.nanoTime() - startTime) / 1e6;
-		System.out.println(executionEntity);
-
 		Execution.Response response = new Execution.Response(executionEntity);
-		response.setTotalMongoTimeMs(totalMongoTimeMs);
 		response.setTotalExecutionTimeMs(totalExecutionTimeMs);
-		response.setTotalServiceTimeMs((System.nanoTime() - serviceStartTime) / 1e6);
+		response.setTotalServiceTimeMs((System.nanoTime() - startTime) / 1e6);
+
+		reportService.reportExecution(executionEntity);
 		return response;
 	}
 
